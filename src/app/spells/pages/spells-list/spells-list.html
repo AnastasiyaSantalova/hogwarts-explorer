@@ -1,1 +1,19 @@
-<p>spells-list works!</p>
+<h2>🪄 Spells</h2>
+<ng-container *ngIf="!error; else errorTpl">
+  <ng-container *ngIf="visibleSpells$ | async as spells; else loading">
+    <div class="spells-list">
+      <app-spell-card
+        *ngFor="let spell of spells"
+        [spell]="spell"
+      ></app-spell-card>
+      <div *ngIf="isLoadingMore" class="loading-more">Loading more...</div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <p>Loading spells...</p>
+</ng-template>
+<ng-template #errorTpl>
+  <p>Error fetching spells</p>
+</ng-template>

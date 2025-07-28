@@ -1,0 +1,26 @@
+<form [formGroup]="registrationForm">
+  <mat-form-field appearance="outline" class="form-group" *ngFor="let field of registrationFormData">
+    <mat-label matNativeControl>{{ field.label }}</mat-label>
+    <input
+      matInput
+      [type]="field.type"
+      [id]="field.key"
+      [placeholder]="field.placeholder"
+      [formControlName]="field.key"
+    />
+    <mat-error
+      *ngIf="registrationForm.get(field.key)?.invalid && registrationForm.get(field.key)?.touched"
+    >
+      {{ field.errorMessage }}
+    </mat-error>
+  </mat-form-field>
+  <mat-checkbox formControlName="acceptTerms">
+    I agree to the Terms and Conditions
+  </mat-checkbox>
+  <mat-error *ngIf="registrationForm.get('acceptTerms')?.touched && registrationForm.get('acceptTerms')?.invalid">
+    You must accept the terms.
+  </mat-error>
+  <button mat-button type="submit" [disabled]="registrationForm.invalid">
+    Register
+  </button>
+</form>
