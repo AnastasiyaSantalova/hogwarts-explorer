@@ -1,28 +1,57 @@
 import { Component, OnInit, NgZone, Inject, PLATFORM_ID } from '@angular/core';
-import { catchError, finalize, of, BehaviorSubject } from 'rxjs';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import {
+  catchError,
+  finalize,
+  of,
+  Observable,
+  combineLatest,
+  startWith,
+  debounceTime,
+  map,
+} from 'rxjs';
+import { SpellCard } from '../../components/spell-card/spell-card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Spells } from '../../services/spells';
 import { CommonModule } from '@angular/common';
 import { Spell } from '../../types';
 import { isPlatformBrowser } from '@angular/common';
-import { SpellCard } from '../../components/spell-card/spell-card';
 
 @Component({
   selector: 'app-spells-list',
-  imports: [CommonModule, SpellCard],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SpellCard,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+  ],
   templateUrl: './spells-list.html',
   styleUrl: './spells-list.scss',
 })
 export class SpellsList implements OnInit {
   private allSpells: Spell[] = [];
-  private visibleSpellsSubject = new BehaviorSubject<Spell[]>([]);
-  protected visibleSpells$ = this.visibleSpellsSubject.asObservable();
+  protected filteredSpells$!: Observable<Spell[]>;
   private scrollHandler!: () => void;
   protected isLoadingMore = false;
 
-  pageSize = 20;
-  currentPage = 0;
-  isLoading: boolean = true;
-  error: boolean = false;
+  // Filters
+  protected nameFilter = new FormControl<string>('');
+  protected typeFilter = new FormControl<string[]>([]);
+  protected lightFilter = new FormControl<string[]>([]);
+  protected canBeVerbalFilter = new FormControl<boolean>(false);
+
+  protected pageSize = 24;
+  protected currentPage = 0;
+  protected isLoading: boolean = true;
+  protected error: boolean = false;
+  protected uniqueTypes: string[] = [];
+  protected uniqueLights: string[] = [];
 
   constructor(
     private spellsService: Spells,
@@ -50,8 +79,37 @@ export class SpellsList implements OnInit {
       )
       .subscribe((data) => {
         this.allSpells = [...data] as Spell[];
-        this.loadMore();
+        this.currentPage = 1;
       });
+
+      this.filteredSpells$ = combineLatest([
+        of(this.allSpells),
+        this.nameFilter.valueChanges.pipe(startWith(''), debounceTime(200)),
+        this.typeFilter.valueChanges.pipe(startWith([])),
+        this.lightFilter.valueChanges.pipe(startWith([])),
+        this.canBeVerbalFilter.valueChanges.pipe(startWith(false)),
+      ]).pipe(
+        map(([spells, name, types, lights, verbal]) => {
+          const typeArray = types as string[];
+          const lightArray = lights as string[];
+
+          const filtered = spells.filter(
+            (spell) =>
+              (!name ||
+                spell.name?.toLowerCase().includes((name || '').toLowerCase()) ||
+                spell.incantation?.toLowerCase().includes((name || '').toLowerCase())||
+                spell.creator?.toLowerCase().includes((name || '').toLowerCase())) &&
+              (typeArray.length === 0 || typeArray.includes(spell.type)) &&
+              (lightArray.length === 0 || lightArray.includes(spell.light)) &&
+              (!verbal || spell.canBeVerbal === true)
+          );
+
+          return filtered.slice(0, this.currentPage * this.pageSize);
+        })
+      );
+
+    this.uniqueTypes = [...new Set(this.allSpells.map((spell) => spell.type))].filter(Boolean);
+    this.uniqueLights = [...new Set(this.allSpells.map((spell) => spell.light))].filter(Boolean);
   }
 
   private onScroll(): void {
@@ -71,15 +129,7 @@ export class SpellsList implements OnInit {
   }
 
   loadMore(): void {
-    const start = this.currentPage * this.pageSize;
-    const end = start + this.pageSize;
-    const next = this.allSpells.slice(start, end);
-
-    if (next.length > 0) {
-      const current = this.visibleSpellsSubject.value;
-      this.visibleSpellsSubject.next([...current, ...next]);
-      this.currentPage++;
-    }
+    this.currentPage++;
   }
 
   ngOnDestroy(): void {

@@ -77,13 +77,19 @@ export class RegistrationForm implements OnInit {
           ],
         ],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&]{8,}$/)]],
-        confirmPassword: [
+        password: [
           '',
           [
             Validators.required,
-            this.passwordMatchValidator,
+            Validators.minLength(8),
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&]{8,}$/
+            ),
           ],
+        ],
+        confirmPassword: [
+          '',
+          [Validators.required, this.passwordMatchValidator],
         ],
         acceptTerms: [false, Validators.requiredTrue],
       },

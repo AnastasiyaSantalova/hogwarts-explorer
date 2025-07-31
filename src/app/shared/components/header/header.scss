@@ -1,8 +1,33 @@
 .header {
+  display: block;
+  width: 100%;
   margin: 0;
   padding: 0;
 
-  .spacer {
-    flex: 1 1 auto;
+  .header-container {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-title {
+      font-size: 2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
   }
 }

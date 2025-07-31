@@ -1,19 +1,62 @@
-<h2>🪄 Spells</h2>
+<div class="spells-list-header-container">
+  <h1 class="spells-list-header-title">🪄 Spells</h1>
+  <div class="spells-list-filters">
+    <!-- Name input -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        [formControl]="nameFilter"
+        placeholder="e.g. Expelliarmus"
+      />
+    </mat-form-field>
+
+    <!-- Type multi-select -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Type</mat-label>
+      <mat-select [formControl]="typeFilter" multiple>
+        <mat-option *ngFor="let type of uniqueTypes" [value]="type"
+          >{{ type }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Light multi-select -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Light</mat-label>
+      <mat-select [formControl]="lightFilter" multiple>
+        <mat-option *ngFor="let light of uniqueLights" [value]="light"
+          >{{ light }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <!-- canBeVerbal -->
+    <mat-checkbox [formControl]="canBeVerbalFilter" class="w-full"
+      >Can Be Verbal</mat-checkbox
+    >
+  </div>
+</div>
+
 <ng-container *ngIf="!error; else errorTpl">
-  <ng-container *ngIf="visibleSpells$ | async as spells; else loading">
-    <div class="spells-list">
-      <app-spell-card
-        *ngFor="let spell of spells"
-        [spell]="spell"
-      ></app-spell-card>
-      <div *ngIf="isLoadingMore" class="loading-more">Loading more...</div>
-    </div>
+  <ng-container *ngIf="isLoading; else loaded">
+    <p>Loading spells...</p>
   </ng-container>
 </ng-container>
-
-<ng-template #loading>
-  <p>Loading spells...</p>
+<ng-template #loaded>
+  <ng-container *ngIf="!error; else errorTpl">
+    <ng-container *ngIf="filteredSpells$ | async as spells">
+      <div class="spells-list">
+        <app-spell-card
+          *ngFor="let spell of spells"
+          [spell]="spell"
+        ></app-spell-card>
+        <div *ngIf="isLoadingMore" class="loading-more">Loading more...</div>
+      </div>
+    </ng-container>
+  </ng-container>
 </ng-template>
+
 <ng-template #errorTpl>
   <p>Error fetching spells</p>
 </ng-template>

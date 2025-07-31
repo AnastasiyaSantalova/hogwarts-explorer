@@ -3,5 +3,11 @@
   <mat-card-content>
     <p><strong>Incantation:</strong> {{ spell.incantation || '—' }}</p>
     <p><strong>Effect:</strong> {{ spell.effect || '—' }}</p>
+    <p><strong>Type:</strong> {{ spell.type || '—' }}</p>
+    <p><strong>Light:</strong> {{ spell.light || '—' }}</p>
+    <p>
+      <strong>Can Be Verbal:</strong> {{ spell.canBeVerbal ? 'Yes' : 'No' }}
+    </p>
+    <p><strong>Creator:</strong> {{ spell.creator || '—' }}</p>
   </mat-card-content>
 </mat-card>

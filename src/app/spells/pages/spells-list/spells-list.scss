@@ -1,11 +1,29 @@
 .spells-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .loading-more {
   text-align: center;
   margin: 1rem;
+}
+
+.spells-list-header-container {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spells-list-filters {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
 }

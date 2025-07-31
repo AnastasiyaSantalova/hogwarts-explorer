@@ -1,0 +1,57 @@
+@use "@angular/material" as mat;
+
+// Gryffindor theme - Red and Gold
+.gryffindor-theme {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$red-palette,
+        accent: mat.$orange-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+// Hufflepuff theme - Yellow and Black
+.hufflepuff-theme {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$yellow-palette,
+        accent: mat.$red-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+// Ravenclaw theme - Blue and Bronze
+.ravencaw-theme {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$blue-palette,
+        accent: mat.$orange-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+// Slytherin theme - Green and Silver
+.slytherin-theme {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$green-palette,
+        accent: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
