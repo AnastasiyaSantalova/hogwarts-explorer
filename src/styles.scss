@@ -7,17 +7,6 @@
 @use "./styles/themes.scss";
 
 html {
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$rose-palette,
-        tertiary: mat.$red-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.

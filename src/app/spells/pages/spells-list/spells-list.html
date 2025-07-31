@@ -38,25 +38,39 @@
   </div>
 </div>
 
-<ng-container *ngIf="!error; else errorTpl">
-  <ng-container *ngIf="isLoading; else loaded">
-    <p>Loading spells...</p>
-  </ng-container>
-</ng-container>
-<ng-template #loaded>
-  <ng-container *ngIf="!error; else errorTpl">
-    <ng-container *ngIf="filteredSpells$ | async as spells">
-      <div class="spells-list">
-        <app-spell-card
-          *ngFor="let spell of spells"
-          [spell]="spell"
-        ></app-spell-card>
-        <div *ngIf="isLoadingMore" class="loading-more">Loading more...</div>
-      </div>
-    </ng-container>
-  </ng-container>
-</ng-template>
+<!-- Loading state -->
+<div *ngIf="isLoading" class="loading-container">
+  <p>Loading spells...</p>
+</div>
 
-<ng-template #errorTpl>
-  <p>Error fetching spells</p>
+<!-- Error state -->
+<div *ngIf="error && !isLoading" class="error-container">
+  <p>Failed to load spells. Please check your connection and try again.</p>
+  <button mat-raised-button color="primary" (click)="retryLoadSpells()">
+    Retry
+  </button>
+</div>
+
+<!-- Content state -->
+<div *ngIf="!isLoading && !error" class="content-container">
+  <ng-container *ngIf="filteredSpells$ | async as spells">
+    <div *ngIf="spells.length > 0; else noSpells" class="spells-list">
+      <app-spell-card
+        *ngFor="let spell of spells"
+        [spell]="spell"
+      ></app-spell-card>
+    </div>
+  </ng-container>
+
+  <!-- Loading more indicator -->
+  <div *ngIf="isLoadingMore && hasMoreSpells" class="loading-more">
+    <p>Loading more spells...</p>
+  </div>
+</div>
+
+<!-- No spells template -->
+<ng-template #noSpells>
+  <div class="no-spells-container">
+    <p>No spells found matching your criteria.</p>
+  </div>
 </ng-template>
