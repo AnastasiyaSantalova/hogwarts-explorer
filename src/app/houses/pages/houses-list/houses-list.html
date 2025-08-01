@@ -1,0 +1,9 @@
+<div class="houses-list-header-container">
+  <h1 class="houses-list-header-title">🏠 Houses</h1>
+  <div class="houses-list">
+    <app-house-card
+      *ngFor="let house of houses"
+      [house]="house"
+    ></app-house-card>
+  </div>
+</div>

@@ -7,8 +7,7 @@ export const routes: Routes = [
     data: {
       preload: true,
     },
-    loadComponent: () =>
-      import('./home/pages/home/home').then((m) => m.Home),
+    loadComponent: () => import('./home/pages/home/home').then((m) => m.Home),
   },
   {
     path: 'spells',
@@ -26,7 +25,7 @@ export const routes: Routes = [
       preload: true,
     },
     loadComponent: () =>
-      import('./houses/components/houses-list/houses-list').then(
+      import('./houses/pages/houses-list/houses-list').then(
         (m) => m.HousesList
       ),
   },

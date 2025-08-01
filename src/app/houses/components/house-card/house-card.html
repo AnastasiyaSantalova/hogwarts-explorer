@@ -1,0 +1,15 @@
+<mat-card class="house-card">
+  <mat-card-header class="house-card-header">
+    <mat-card-title>{{ house.name }}</mat-card-title>
+  </mat-card-header>
+  <div class="house-image-container">
+    <button mat-icon-button class="house-image-button">
+      <img
+        *ngIf="house.name"
+        [src]="`https://anas-b1197.web.app/hw/${house.name}.png`"
+        [alt]="house.name"
+        class="house-image"
+      />
+    </button>
+  </div>
+</mat-card>
