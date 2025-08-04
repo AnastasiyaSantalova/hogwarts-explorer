@@ -30,7 +30,7 @@
               }
             ],
             "styles": [
-              "src/styles/themes.scss",
+              "src/styles/index.scss",
               "src/styles.scss",
               "node_modules/@angular/material/prebuilt-themes/rose-red.css"
             ],

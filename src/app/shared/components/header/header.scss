@@ -1,3 +1,5 @@
+@use "../../../../styles/index.scss" as *;
+
 .header {
   display: block;
   width: 100%;
@@ -10,14 +12,17 @@
   z-index: 1000;
 
   .header-container {
-    max-width: 1200px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 2rem;
+    @include layout-container;
 
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .header-title-link {
+      text-decoration: none;
+      color: inherit;
+    }
 
     .header-title {
       font-size: 2rem;

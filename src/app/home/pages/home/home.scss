@@ -1,10 +1,13 @@
+@use "../../../../styles/index.scss" as *;
+
 .home {
   text-align: center;
   padding: 4rem 1rem;
 
   h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: $h1-font-size;
+    font-weight: $h1-font-weight;
+    margin-bottom: $header-bottom-margin;
   }
 
   .buttons {

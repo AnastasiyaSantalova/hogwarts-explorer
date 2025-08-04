@@ -1,3 +1,5 @@
+@use "../styles/index.scss" as *;
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -5,8 +7,9 @@
 
   .main-content {
     flex: 1;
-    max-width: 1200px;
+    @include layout-container;
+
     margin: 100px auto 0;
-    padding: 0 2rem 2rem
+    padding: 0 2rem 2rem;
   }
 }

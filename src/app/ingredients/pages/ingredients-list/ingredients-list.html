@@ -1,1 +1,27 @@
-<p>ingredients-list works!</p>
+<div class="ingredients-list-header-container">
+  <div class="ingredients-list-header-title-container">
+    <h1 class="ingredients-list-header-title">🧪 Ingredients</h1>
+    <div class="ingredients-list-filter-container">
+      <mat-form-field>
+        <mat-label>Find an ingredient</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="nameFilter"
+          (input)="onFilterChange()"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-progress-spinner
+    *ngIf="isLoading"
+    mode="indeterminate"
+    diameter="50"
+  ></mat-progress-spinner>
+  <div class="ingredients-list">
+    <app-ingredient-card
+      *ngFor="let ingredient of filteredIngredients"
+      [ingredient]="ingredient"
+    ></app-ingredient-card>
+  </div>
+</div>

@@ -1,14 +1,12 @@
 <mat-toolbar class="header">
   <div class="header-container">
-    <span class="header-title">Hogwarts Explorer</span>
+    <a routerLink="/" class="header-title-link">
+      <span class="header-title">Hogwarts Explorer</span>
+    </a>
     <span class="menu">
       <button mat-button routerLink="/spells">Spells</button>
       <button mat-button routerLink="/houses">Houses</button>
-      <button mat-button routerLink="/characters">Characters</button>
-      <button mat-button routerLink="/books">Books</button>
-      <button mat-button routerLink="/movies">Movies</button>
-      <button mat-button routerLink="/games">Games</button>
-      <button mat-button routerLink="/other">Other</button>
+      <button mat-button routerLink="/ingredients">Ingredients</button>
       <app-theme-switcher></app-theme-switcher>
     </span>
   </div>
