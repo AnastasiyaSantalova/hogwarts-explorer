@@ -23,6 +23,12 @@ import { Spells } from '../../services/spells';
 import { CommonModule } from '@angular/common';
 import { Spell } from '../../types';
 import { isPlatformBrowser } from '@angular/common';
+import { Loader } from '../../../shared/components/loader/loader';
+import { ErrorMessage } from '../../../shared/components/error-message/error-message';
+
+/**
+ * SpellsList component that displays a list of spells with filtering and pagination.
+ */
 
 @Component({
   selector: 'app-spells-list',
@@ -35,6 +41,8 @@ import { isPlatformBrowser } from '@angular/common';
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,
+    Loader,
+    ErrorMessage,
   ],
   templateUrl: './spells-list.html',
   styleUrl: './spells-list.scss',
@@ -137,25 +145,26 @@ export class SpellsList implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        }),
-        catchError((error) => {
+        })
+      )
+      .subscribe({
+        next: (data: Spell[]) => {
+          const spells = Array.isArray(data) ? data : [];
+          this.allSpellsSubject.next(spells);
+
+          // Update unique types and lights after data is loaded
+          this.uniqueTypes = [
+            ...new Set(spells.map((spell) => spell.type)),
+          ].filter(Boolean);
+          this.uniqueLights = [
+            ...new Set(spells.map((spell) => spell.light)),
+          ].filter(Boolean);
+        },
+        error: (error: unknown) => {
           console.error('Error loading spells:', error);
           this.error = true;
           this.allSpellsSubject.next([]);
-          return of([]);
-        })
-      )
-      .subscribe((data) => {
-        const spells = Array.isArray(data) ? data : [];
-        this.allSpellsSubject.next(spells);
-
-        // Update unique types and lights after data is loaded
-        this.uniqueTypes = [
-          ...new Set(spells.map((spell) => spell.type)),
-        ].filter(Boolean);
-        this.uniqueLights = [
-          ...new Set(spells.map((spell) => spell.light)),
-        ].filter(Boolean);
+        },
       });
   }
 

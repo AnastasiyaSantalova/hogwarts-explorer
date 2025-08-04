@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../types';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Ingredients {
   private apiUrl = 'https://wizard-world-api.herokuapp.com/Ingredients';

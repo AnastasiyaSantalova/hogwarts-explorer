@@ -1,6 +1,17 @@
 <div class="houses-list-header-container">
   <h1 class="houses-list-header-title">🏠 Houses</h1>
-  <div class="houses-list">
+
+  <!-- Loading state -->
+  <app-loader *ngIf="isLoading"></app-loader>
+
+  <!-- Error state -->
+  <app-error-message
+    *ngIf="error"
+    [retryCallback]="retryLoadHouses.bind(this)"
+  ></app-error-message>
+
+  <!-- Content state -->
+  <div class="houses-list" *ngIf="!isLoading">
     <app-house-card
       *ngFor="let house of houses"
       [house]="house"

@@ -13,11 +13,17 @@
       </mat-form-field>
     </div>
   </div>
-  <mat-progress-spinner
-    *ngIf="isLoading"
-    mode="indeterminate"
-    diameter="50"
-  ></mat-progress-spinner>
+
+  <!-- Loading state -->
+  <app-loader *ngIf="isLoading"></app-loader>
+
+  <!-- Error state -->
+  <app-error-message
+    *ngIf="error"
+    [retryCallback]="retryLoadIngredients.bind(this)"
+  ></app-error-message>
+
+  <!-- Content state -->
   <div class="ingredients-list">
     <app-ingredient-card
       *ngFor="let ingredient of filteredIngredients"

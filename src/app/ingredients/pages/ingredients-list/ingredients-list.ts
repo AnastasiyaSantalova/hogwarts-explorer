@@ -2,22 +2,25 @@ import { Component } from '@angular/core';
 import { IngredientCard } from '../../components/ingredient-card/ingredient-card';
 import { Ingredient } from '../../types';
 import { Ingredients } from '../../services/ingredients';
-import { delay, finalize, tap } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Loader } from '../../../shared/components/loader/loader';
+import { ErrorMessage } from '../../../shared/components/error-message/error-message';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-ingredients-list',
   imports: [
     IngredientCard,
     CommonModule,
-    MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    Loader,
+    ErrorMessage,
   ],
   templateUrl: './ingredients-list.html',
   styleUrl: './ingredients-list.scss',
@@ -46,9 +49,17 @@ export class IngredientsList {
           this.isLoading = false;
         })
       )
-      .subscribe((data) => {
-        this.ingredients = [...data];
-        this.filteredIngredients = this.filterIngredients(data);
+      .subscribe({
+        next: (data) => {
+          this.ingredients = [...data];
+          this.filteredIngredients = this.filterIngredients(data);
+        },
+        error: (error) => {
+          console.error('Error loading ingredients:', error);
+          this.error = true;
+          this.ingredients = [];
+          this.filteredIngredients = [];
+        },
       });
   }
 
@@ -62,6 +73,10 @@ export class IngredientsList {
 
   onFilterChange(): void {
     this.filteredIngredients = this.filterIngredients(this.ingredients);
-    console.log(this.filteredIngredients);
+  }
+
+  protected retryLoadIngredients(): void {
+    this.filteredIngredients = [];
+    this.loadIngredients();
   }
 }

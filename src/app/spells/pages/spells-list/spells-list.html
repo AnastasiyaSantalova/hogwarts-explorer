@@ -39,17 +39,13 @@
 </div>
 
 <!-- Loading state -->
-<div *ngIf="isLoading" class="loading-container">
-  <p>Loading spells...</p>
-</div>
+<app-loader *ngIf="isLoading"></app-loader>
 
 <!-- Error state -->
-<div *ngIf="error && !isLoading" class="error-container">
-  <p>Failed to load spells. Please check your connection and try again.</p>
-  <button mat-raised-button color="primary" (click)="retryLoadSpells()">
-    Retry
-  </button>
-</div>
+<app-error-message
+  *ngIf="error"
+  [retryCallback]="retryLoadSpells.bind(this)"
+></app-error-message>
 
 <!-- Content state -->
 <div *ngIf="!isLoading && !error" class="content-container">

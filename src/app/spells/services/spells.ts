@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Spell } from '../types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Spells {
   private apiUrl = 'https://wizard-world-api.herokuapp.com/Spells';
