@@ -12,11 +12,11 @@ export class Elixirs {
   constructor(private http: HttpClient) {}
 
   getElixirs(
-    name: string,
-    difficulty: string,
-    ingredient: string,
-    inventorFullName: string,
-    manufacturer: string
+    name: string = '',
+    difficulty: string = '',
+    ingredient: string = '',
+    inventorFullName: string = '',
+    manufacturer: string = ''
   ): Observable<Elixir[]> {
     const capitalize = (str: string) =>
       str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';

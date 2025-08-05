@@ -58,11 +58,13 @@ export class ElixirsList {
       )
       .subscribe({
         next: (data) => {
+          this.isLoading = false;
           this.elixirs = [...data];
           this.filteredElixirs = [...data];
         },
         error: (error) => {
           console.error('Error loading elixirs:', error);
+          this.isLoading = false;
           this.error = true;
           this.elixirs = [];
           this.filteredElixirs = [];
