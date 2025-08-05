@@ -11,5 +11,21 @@
 
     margin: 100px auto 0;
     padding: 0 2rem 2rem;
+
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("https://anas-b1197.web.app/hw/hogwarts-harry.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.25;
+      z-index: -1;
+      pointer-events: none;
+    }
   }
 }

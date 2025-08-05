@@ -12,6 +12,23 @@
       density: 0,
     )
   );
+
+  --mat-sys-primary: light-dark(#8b1a1a, #ffb4a8); // тёмно-красный
+  --mat-sys-on-primary: light-dark(#ffffff, #3b0000);
+  --mat-sys-primary-container: light-dark(#ffd6cc, #510000);
+  --mat-sys-on-primary-container: light-dark(#3b0000, #ffd6cc);
+
+  --mat-sys-secondary: light-dark(#c78d42, #eac28b); // золотой
+  --mat-sys-on-secondary: light-dark(#1f1300, #302000);
+  --mat-sys-secondary-container: light-dark(#ffe8c7, #3e2a00);
+  --mat-sys-on-secondary-container: light-dark(#3e2a00, #ffe8c7);
+
+  --mat-sys-background: light-dark(#fff8f6, #181211);
+  --mat-sys-surface: light-dark(#fff8f6, #181211);
+  --mat-sys-on-surface: light-dark(#201a19, #ede0dd);
+
+  --mat-sys-outline: light-dark(#a0847c, #cbb5ad);
+  --mat-sys-surface-tint: var(--mat-sys-primary);
 }
 
 // Hufflepuff theme - Yellow and Black
@@ -26,6 +43,23 @@
       density: 0,
     )
   );
+
+  --mat-sys-primary: light-dark(#e6b800, #ffdd75); // насыщенный янтарный
+  --mat-sys-on-primary: light-dark(#1a1a1a, #3b2f00);
+  --mat-sys-primary-container: light-dark(#fff6d6, #3b2f00);
+  --mat-sys-on-primary-container: light-dark(#3b2f00, #fff6d6);
+
+  --mat-sys-secondary: light-dark(#5c5c5c, #aaaaaa); // серо-чёрный
+  --mat-sys-on-secondary: light-dark(#ffffff, #1a1a1a);
+  --mat-sys-secondary-container: light-dark(#f0f0f0, #333);
+  --mat-sys-on-secondary-container: light-dark(#1a1a1a, #f0f0f0);
+
+  --mat-sys-background: light-dark(#fffdf3, #171502);
+  --mat-sys-surface: light-dark(#fffdf3, #171502);
+  --mat-sys-on-surface: light-dark(#2e2a1f, #f7f2d0);
+
+  --mat-sys-outline: light-dark(#a89f6d, #cfc582);
+  --mat-sys-surface-tint: var(--mat-sys-primary);
 }
 
 // Ravenclaw theme - Blue and Bronze
@@ -40,6 +74,23 @@
       density: 0,
     )
   );
+
+  --mat-sys-primary: light-dark(#2b4c7e, #9ab8de); // синий индиго
+  --mat-sys-on-primary: light-dark(#ffffff, #0b1b30);
+  --mat-sys-primary-container: light-dark(#d2e4ff, #1b355a);
+  --mat-sys-on-primary-container: light-dark(#0b1b30, #d2e4ff);
+
+  --mat-sys-secondary: light-dark(#a2703d, #d8b18f); // бронза
+  --mat-sys-on-secondary: light-dark(#2e1800, #3b2200);
+  --mat-sys-secondary-container: light-dark(#ffe2c4, #50301a);
+  --mat-sys-on-secondary-container: light-dark(#50301a, #ffe2c4);
+
+  --mat-sys-background: light-dark(#f7faff, #0e1721);
+  --mat-sys-surface: light-dark(#f7faff, #0e1721);
+  --mat-sys-on-surface: light-dark(#142033, #dfe9f5);
+
+  --mat-sys-outline: light-dark(#667a92, #a3b8d4);
+  --mat-sys-surface-tint: var(--mat-sys-primary);
 }
 
 // Slytherin theme - Green and Silver
@@ -54,4 +105,21 @@
       density: 0,
     )
   );
+
+  --mat-sys-primary: light-dark(#2e7d59, #a8d5ba);
+  --mat-sys-on-primary: light-dark(#ffffff, #0e2616);
+  --mat-sys-primary-container: light-dark(#c9ede0, #1a3d2e);
+  --mat-sys-on-primary-container: light-dark(#0e2616, #c9ede0);
+
+  --mat-sys-secondary: light-dark(#a6a6a6, #d3d3d3);
+  --mat-sys-on-secondary: light-dark(#1a1a1a, #1a1a1a);
+  --mat-sys-secondary-container: light-dark(#e6e6e6, #444);
+  --mat-sys-on-secondary-container: light-dark(#1a1a1a, #ffffff);
+
+  --mat-sys-background: light-dark(#f4fff7, #0f1e16);
+  --mat-sys-surface: light-dark(#f4fff7, #0f1e16);
+  --mat-sys-on-surface: light-dark(#0f1e16, #f4fff7);
+
+  --mat-sys-outline: light-dark(#5c7264, #87a390);
+  --mat-sys-surface-tint: var(--mat-sys-primary);
 }

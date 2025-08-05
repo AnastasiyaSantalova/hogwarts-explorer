@@ -1,0 +1,11 @@
+.elixirs-list-header-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.elixirs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}

@@ -3,12 +3,16 @@
 
 .home {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 0 1rem;
 
-  h1 {
+  .home-page-header {
     font-size: $h1-font-size;
     font-weight: $h1-font-weight;
     margin-bottom: $header-bottom-margin;
+
+    .home-page-header-hogwarts {
+      font-family: $font-family-header;
+    }
   }
 
   .buttons {
@@ -17,5 +21,16 @@
     justify-content: center;
     margin-top: 2rem;
     flex-wrap: wrap;
+
+    button {
+      font-family: $font-family-menu;
+    }
+  }
+
+  .home-image {
+    width: 30%;
+    max-width: 600px;
+    height: auto;
+    margin-top: 2rem;
   }
 }

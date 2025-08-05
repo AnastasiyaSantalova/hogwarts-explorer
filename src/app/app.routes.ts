@@ -39,4 +39,14 @@ export const routes: Routes = [
         (m) => m.IngredientsList
       ),
   },
+  {
+    path: 'elixirs',
+    data: {
+      preload: true,
+    },
+    loadComponent: () =>
+      import('./elixirs/pages/elixirs-list/elixirs-list').then(
+        (m) => m.ElixirsList
+      ),
+  },
 ];

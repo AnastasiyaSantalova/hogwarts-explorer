@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { IngredientCard } from '../../components/ingredient-card/ingredient-card';
 import { Ingredient } from '../../types';
 import { Ingredients } from '../../services/ingredients';
-import { catchError, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Loader } from '../../../shared/components/loader/loader';
 import { ErrorMessage } from '../../../shared/components/error-message/error-message';
-import { of } from 'rxjs';
+import { PageHeader } from "../../../shared/components/page-header/page-header";
 
 @Component({
   selector: 'app-ingredients-list',
@@ -21,7 +21,8 @@ import { of } from 'rxjs';
     ReactiveFormsModule,
     Loader,
     ErrorMessage,
-  ],
+    PageHeader
+],
   templateUrl: './ingredients-list.html',
   styleUrl: './ingredients-list.scss',
 })

@@ -1,0 +1,29 @@
+<div class="elixirs-list-filter-container">
+  <mat-form-field appearance="outline" class="w-full" style="max-width: 150px">
+    <mat-label>Find an elixir</mat-label>
+    <input matInput type="text" [formControl]="nameControl" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full" style="max-width: 150px">
+    <mat-label>Difficulty</mat-label>
+    <mat-select [formControl]="difficultyControl">
+      <mat-option
+        *ngFor="let difficulty of uniqueDifficulties"
+        [value]="difficulty"
+      >
+        {{ difficulty }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full" style="max-width: 150px">
+    <mat-label>Ingredient</mat-label>
+    <input matInput type="text" [formControl]="ingredientControl" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full" style="max-width: 150px">
+    <mat-label>Inventor Full Name</mat-label>
+    <input matInput type="text" [formControl]="inventorFullNameControl" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-1/2" style="max-width: 150px">
+    <mat-label>Manufacturer</mat-label>
+    <input matInput type="text" [formControl]="manufacturerControl" />
+  </mat-form-field>
+</div>

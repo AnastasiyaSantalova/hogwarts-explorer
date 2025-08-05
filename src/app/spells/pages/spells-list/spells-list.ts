@@ -1,7 +1,6 @@
 import { Component, OnInit, NgZone, Inject, PLATFORM_ID } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import {
-  catchError,
   finalize,
   of,
   Observable,
@@ -25,6 +24,7 @@ import { Spell } from '../../types';
 import { isPlatformBrowser } from '@angular/common';
 import { Loader } from '../../../shared/components/loader/loader';
 import { ErrorMessage } from '../../../shared/components/error-message/error-message';
+import { PageHeader } from "../../../shared/components/page-header/page-header";
 
 /**
  * SpellsList component that displays a list of spells with filtering and pagination.
@@ -43,7 +43,8 @@ import { ErrorMessage } from '../../../shared/components/error-message/error-mes
     MatButtonModule,
     Loader,
     ErrorMessage,
-  ],
+    PageHeader
+],
   templateUrl: './spells-list.html',
   styleUrl: './spells-list.scss',
   host: {

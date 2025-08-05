@@ -6,6 +6,16 @@
 @use "@angular/material" as mat;
 @use "./styles/index.scss";
 
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+
+@font-face {
+  font-family: "HarryP";
+  src: url("/assets/fonts/HarryP.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
@@ -29,5 +39,5 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Cormorant Garamond", serif;
 }

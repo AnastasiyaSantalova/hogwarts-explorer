@@ -1,0 +1,25 @@
+<div class="elixirs-list-header-container">
+  <div class="elixirs-list-header-title-container">
+    <app-page-header name="🧉 Elixirs"></app-page-header>
+    <app-elixir-filters
+      (onFilterChange)="filterElixirs($event)"
+    ></app-elixir-filters>
+  </div>
+
+  <!-- Loading state -->
+  <app-loader *ngIf="isLoading"></app-loader>
+
+  <!-- Error state -->
+  <app-error-message
+    *ngIf="error"
+    [retryCallback]="retryLoadElixirs.bind(this)"
+  ></app-error-message>
+
+  <!-- Content state -->
+  <div class="elixirs-list" *ngIf="!isLoading">
+    <app-elixir-card
+      *ngFor="let elixir of filteredElixirs"
+      [elixir]="elixir"
+    ></app-elixir-card>
+  </div>
+</div>

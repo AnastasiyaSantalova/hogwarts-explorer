@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 import { Loader } from '../../../shared/components/loader/loader';
 import { ErrorMessage } from '../../../shared/components/error-message/error-message';
+import { PageHeader } from "../../../shared/components/page-header/page-header";
 
 /**
  * HousesList component that displays a list of houses.
@@ -13,7 +14,7 @@ import { ErrorMessage } from '../../../shared/components/error-message/error-mes
 
 @Component({
   selector: 'app-houses-list',
-  imports: [HouseCard, CommonModule, Loader, ErrorMessage],
+  imports: [HouseCard, CommonModule, Loader, ErrorMessage, PageHeader],
   templateUrl: './houses-list.html',
   styleUrl: './houses-list.scss',
 })
