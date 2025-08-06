@@ -2,6 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ElixirsList } from './elixirs-list';
 import { provideHttpClient } from '@angular/common/http';
+import {
+  MOCK_ELIXIR_1,
+  MOCK_ELIXIR_FILTER_INPUTS,
+  MOCK_ELIXIRS,
+} from '../../__mocks__/elixirs.mock';
 
 describe('ElixirsList', () => {
   let component: ElixirsList;
@@ -35,18 +40,14 @@ describe('ElixirsList', () => {
   });
 
   it('should handle successful elixir loading', () => {
-    const mockElixirs = [
-      { id: '1', name: 'Elixir One' },
-      { id: '2', name: 'Elixir Two' },
-    ];
     spyOn((component as any).elixirsService, 'getElixirs').and.returnValue({
       pipe: () => ({
-        subscribe: ({ next }: any) => next(mockElixirs),
+        subscribe: ({ next }: any) => next(MOCK_ELIXIRS),
       }),
     });
     (component as any).loadElixirs();
-    expect((component as any).elixirs).toEqual(mockElixirs);
-    expect((component as any).filteredElixirs).toEqual(mockElixirs);
+    expect((component as any).elixirs).toEqual(MOCK_ELIXIRS);
+    expect((component as any).filteredElixirs).toEqual(MOCK_ELIXIRS);
     expect((component as any).isLoading).toBeFalse();
     expect((component as any).error).toBeFalse();
   });
@@ -72,35 +73,44 @@ describe('ElixirsList', () => {
   });
 
   it('should filter elixirs based on filter inputs', () => {
-    const filterInputs = {
-      name: 'Elixir',
-      difficulty: 'Moderate',
-      ingredient: 'Ingredient',
-      inventorFullName: 'Inventor',
-      manufacturer: 'Manufacturer',
-    };
-    spyOn((component as any).elixirsService, 'getElixirs').and.returnValue({
-      subscribe: (callback: any) =>
-        callback([{ id: '1', name: 'Filtered Elixir' }]),
-    });
-    (component as any).filterElixirs(filterInputs);
-    expect((component as any).filteredElixirs).toEqual([
-      { id: '1', name: 'Filtered Elixir' },
-    ]);
+    spyOn((component as any).elixirsService, 'getElixirs').and.callFake(
+      (
+        name: string,
+        difficulty: string,
+        ingredient: string,
+        inventorFullName: string,
+        manufacturer: string
+      ) => ({
+        subscribe: (callback: any) => {
+          // Simulate filtering logic
+          const filtered = MOCK_ELIXIRS.filter(
+            (e) =>
+              (!name || e.name === name) &&
+              (!difficulty || e.difficulty === difficulty) &&
+              (!ingredient ||
+                e.ingredients.some((i) => i.name === ingredient)) &&
+              (!inventorFullName ||
+                e.inventors.some(
+                  (inv) =>
+                    `${inv.firstName} ${inv.lastName}` === inventorFullName
+                )) &&
+              (!manufacturer || e.manufacturer === manufacturer)
+          );
+          callback(filtered);
+        },
+      })
+    );
+    (component as any).filterElixirs(MOCK_ELIXIR_FILTER_INPUTS);
+    expect((component as any).filteredElixirs).toEqual([{ ...MOCK_ELIXIR_1 }]);
   });
 
   it('should update filter inputs when filterElixirs is called', () => {
-    const filterInputs = {
-      name: 'Test Elixir',
-      difficulty: 'Moderate',
-      ingredient: 'Test Ingredient',
-      inventorFullName: 'John Doe',
-      manufacturer: 'Test Manufacturer',
-    };
-    (component as any).filterElixirs(filterInputs);
+    (component as any).filterElixirs(MOCK_ELIXIR_FILTER_INPUTS);
 
     setTimeout(() => {
-      expect((component as any).filterInputs).toEqual(filterInputs);
+      expect((component as any).filterInputs).toEqual(
+        MOCK_ELIXIR_FILTER_INPUTS
+      );
     }, 350); // Wait for debounce time
   });
 });

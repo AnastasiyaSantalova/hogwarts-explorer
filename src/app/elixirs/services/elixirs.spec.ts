@@ -4,38 +4,14 @@ import { Elixirs } from './elixirs';
 import { of, throwError } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
 import { Elixir } from '../types';
+import {
+  MOCK_ELIXIR_1,
+  MOCK_ELIXIR_FILTER_INPUTS,
+  MOCK_ELIXIRS,
+} from '../__mocks__/elixirs.mock';
 
 describe('Elixirs', () => {
   let service: Elixirs;
-
-  const mockElixirs = [
-    {
-      id: '1',
-      effect: 'Test Effect',
-      sideEffects: '',
-      characteristics: '',
-      time: '1 hour',
-      name: 'Test Elixir',
-      ingredients: [
-        { id: '123', name: 'Ingredient 1' },
-        { id: '312', name: 'Ingredient 2' },
-      ],
-      inventors: [
-        { id: '1', firstName: 'John', lastName: 'Doe' },
-        { id: '2', firstName: 'Jane', lastName: 'Smith' },
-      ],
-      difficulty: 'Moderate',
-      manufacturer: 'Test Manufacturer',
-    } as Elixir,
-  ];
-
-  const mockFilterInputs = {
-    name: 'Nonexistent Elixir',
-    difficulty: 'Impossible',
-    ingredient: 'Nonexistent Ingredient',
-    inventorFullName: 'Nonexistent Inventor',
-    manufacturer: 'Nonexistent Manufacturer',
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -72,49 +48,65 @@ describe('Elixirs', () => {
   });
 
   it('should filter elixirs based on inputs', (done) => {
-    const filterInputs = {
-      name: 'Test Elixir',
-      difficulty: 'Easy',
-      ingredient: 'Test Ingredient',
-      inventorFullName: 'John Doe',
-      manufacturer: 'Test Manufacturer',
-    };
-
-    spyOn(service, 'getElixirs').and.returnValue(of(mockElixirs));
+    spyOn(service, 'getElixirs').and.callFake(
+      (name, difficulty, ingredient, inventorFullName, manufacturer) => {
+        const filtered = MOCK_ELIXIRS.filter(
+          (elixir) =>
+            (!name || elixir.name === name) &&
+            (!difficulty || elixir.difficulty === difficulty) &&
+            (!ingredient ||
+              elixir.ingredients.some((ing) => ing.name === ingredient)) &&
+            (!inventorFullName ||
+              elixir.inventors.some(
+                (inv) => `${inv.firstName} ${inv.lastName}` === inventorFullName
+              )) &&
+            (!manufacturer || elixir.manufacturer === manufacturer)
+        );
+        return of(filtered);
+      }
+    );
 
     service
       .getElixirs(
-        filterInputs.name,
-        filterInputs.difficulty,
-        filterInputs.ingredient,
-        filterInputs.inventorFullName,
-        filterInputs.manufacturer
+        MOCK_ELIXIR_FILTER_INPUTS.name,
+        MOCK_ELIXIR_FILTER_INPUTS.difficulty,
+        MOCK_ELIXIR_FILTER_INPUTS.ingredient,
+        MOCK_ELIXIR_FILTER_INPUTS.inventorFullName,
+        MOCK_ELIXIR_FILTER_INPUTS.manufacturer
       )
       .subscribe((elixirs) => {
-        expect(elixirs).toEqual(mockElixirs);
+        expect(elixirs).toEqual([MOCK_ELIXIR_1]);
         done();
       });
   });
 
   it('should return an empty array if no elixirs match the filters', (done) => {
-    // Simulate filtering logic
-    const filtered = mockElixirs.filter(elixir =>
-      elixir.name === mockFilterInputs.name &&
-      elixir.difficulty === mockFilterInputs.difficulty &&
-      elixir.ingredients.some(ing => ing.name === mockFilterInputs.ingredient) &&
-      elixir.inventors.some(inv => `${inv.firstName} ${inv.lastName}` === mockFilterInputs.inventorFullName) &&
-      elixir.manufacturer === mockFilterInputs.manufacturer
+    spyOn(service, 'getElixirs').and.callFake(
+      (name, difficulty, ingredient, inventorFullName, manufacturer) => {
+        const filtered = MOCK_ELIXIRS.filter(
+          (elixir) =>
+            (!name || elixir.name === name) &&
+            (!difficulty || elixir.difficulty === difficulty) &&
+            (!ingredient ||
+              elixir.ingredients.some((ing) => ing.name === ingredient)) &&
+            (!inventorFullName ||
+              elixir.inventors.some(
+                (inv) => `${inv.firstName} ${inv.lastName}` === inventorFullName
+              )) &&
+            (!manufacturer || elixir.manufacturer === manufacturer)
+        );
+        return of(filtered);
+      }
     );
 
-    spyOn(service, 'getElixirs').and.returnValue(of(filtered));
-
+    // Use filter values that do NOT match any elixir
     service
       .getElixirs(
-        mockFilterInputs.name,
-        mockFilterInputs.difficulty,
-        mockFilterInputs.ingredient,
-        mockFilterInputs.inventorFullName,
-        mockFilterInputs.manufacturer
+        'Nonexistent Elixir',
+        'Impossible Difficulty',
+        'Unknown Ingredient',
+        'Nobody',
+        'No Manufacturer'
       )
       .subscribe((elixirs) => {
         expect(elixirs).toEqual([]);
@@ -143,7 +135,9 @@ describe('Elixirs', () => {
 
   it('should fetch an elixir by ID', (done) => {
     const mockId = '12345';
-    spyOn(service, 'getElixirById').and.returnValue(of({ id: mockId } as Elixir));
+    spyOn(service, 'getElixirById').and.returnValue(
+      of({ id: mockId } as Elixir)
+    );
 
     service.getElixirById(mockId).subscribe((elixir) => {
       expect(elixir).toBeDefined();

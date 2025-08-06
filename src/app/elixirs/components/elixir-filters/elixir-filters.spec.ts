@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ElixirFilters } from './elixir-filters';
+import { MOCK_ELIXIR_FILTER_INPUTS } from '../../__mocks__/elixirs.mock';
 
 describe('ElixirFilters', () => {
   let component: ElixirFilters;
@@ -22,19 +23,23 @@ describe('ElixirFilters', () => {
 
   it('should emit filter changes', (done) => {
     spyOn(component.onFilterChange, 'emit');
-    (component as any).nameControl.setValue('Test Elixir');
-    (component as any).difficultyControl.setValue('Moderate');
-    (component as any).ingredientControl.setValue('Test Ingredient');
-    (component as any).inventorFullNameControl.setValue('John Doe');
-    (component as any).manufacturerControl.setValue('Test Manufacturer');
+    (component as any).nameControl.setValue(MOCK_ELIXIR_FILTER_INPUTS.name);
+    (component as any).difficultyControl.setValue(
+      MOCK_ELIXIR_FILTER_INPUTS.difficulty
+    );
+    (component as any).ingredientControl.setValue(
+      MOCK_ELIXIR_FILTER_INPUTS.ingredient
+    );
+    (component as any).inventorFullNameControl.setValue(
+      MOCK_ELIXIR_FILTER_INPUTS.inventorFullName
+    );
+    (component as any).manufacturerControl.setValue(
+      MOCK_ELIXIR_FILTER_INPUTS.manufacturer
+    );
 
     setTimeout(() => {
       expect(component.onFilterChange.emit).toHaveBeenCalledWith({
-        name: 'Test Elixir',
-        difficulty: 'Moderate',
-        ingredient: 'Test Ingredient',
-        inventorFullName: 'John Doe',
-        manufacturer: 'Test Manufacturer',
+        ...MOCK_ELIXIR_FILTER_INPUTS,
       });
       done();
     }, 350); // Wait for debounce time

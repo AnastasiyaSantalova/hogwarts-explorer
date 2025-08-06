@@ -76,12 +76,10 @@ export class ElixirsList {
     const { name, difficulty, ingredient, inventorFullName, manufacturer } =
       elixirFilters;
 
-    console.log('Filtering elixirs with:', elixirFilters);
     this.elixirsService
       .getElixirs(name, difficulty, ingredient, inventorFullName, manufacturer)
       .subscribe((elixirs) => {
         this.filteredElixirs = elixirs;
-        console.log('Filtered elixirs:', this.filteredElixirs);
       });
   }
 

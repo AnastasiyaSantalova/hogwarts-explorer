@@ -1,37 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { finalize } from 'rxjs/operators';
 import { IngredientCard } from '../../components/ingredient-card/ingredient-card';
 import { Ingredient } from '../../types';
 import { Ingredients } from '../../services/ingredients';
-import { finalize } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Loader } from '../../../shared/components/loader/loader';
 import { ErrorMessage } from '../../../shared/components/error-message/error-message';
-import { PageHeader } from "../../../shared/components/page-header/page-header";
+import { PageHeader } from '../../../shared/components/page-header/page-header';
+import { IngredientFilters } from '../../components/ingredient-filters/ingredient-filters';
 
 @Component({
   selector: 'app-ingredients-list',
   imports: [
     IngredientCard,
     CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
     Loader,
     ErrorMessage,
-    PageHeader
-],
+    PageHeader,
+    IngredientFilters,
+  ],
   templateUrl: './ingredients-list.html',
   styleUrl: './ingredients-list.scss',
 })
-export class IngredientsList {
+
+export class IngredientsList implements OnInit {
   protected ingredients: Ingredient[] = [];
   protected filteredIngredients: Ingredient[] = [];
-  protected isLoading = false;
-  protected error = false;
-  protected nameFilter = new FormControl('');
+  protected isLoading: boolean = false;
+  protected error: boolean = false;
 
   constructor(private ingredientsService: Ingredients) {}
 
@@ -53,7 +49,7 @@ export class IngredientsList {
       .subscribe({
         next: (data) => {
           this.ingredients = [...data];
-          this.filteredIngredients = this.filterIngredients(data);
+          this.filteredIngredients = this.filterIngredients(data, '');
         },
         error: (error) => {
           console.error('Error loading ingredients:', error);
@@ -64,16 +60,18 @@ export class IngredientsList {
       });
   }
 
-  filterIngredients(ingredients: Ingredient[]): Ingredient[] {
+  filterIngredients(ingredients: Ingredient[], name: string): Ingredient[] {
+    if (!name || name.trim() === '' || !ingredients) {
+      return ingredients;
+    }
+
     return ingredients.filter((ingredient) =>
-      ingredient.name
-        .toLowerCase()
-        .includes(this.nameFilter.value?.toLowerCase() ?? '')
+      ingredient.name.toLowerCase().includes(name.toLowerCase() ?? '')
     );
   }
 
-  onFilterChange(): void {
-    this.filteredIngredients = this.filterIngredients(this.ingredients);
+  onFilterChange(name: string): void {
+    this.filteredIngredients = this.filterIngredients(this.ingredients, name);
   }
 
   protected retryLoadIngredients(): void {

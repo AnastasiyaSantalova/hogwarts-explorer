@@ -1,12 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Ingredient } from '../../types';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ingredient-card',
-  imports: [MatCardModule],
+  standalone: true,
+  imports: [MatCardModule, CommonModule],
   templateUrl: './ingredient-card.html',
-  styleUrl: './ingredient-card.scss',
+  styleUrls: ['./ingredient-card.scss'],
 })
 export class IngredientCard {
   @Input() ingredient!: Ingredient;

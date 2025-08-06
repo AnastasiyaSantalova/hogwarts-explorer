@@ -1,5 +1,7 @@
-<mat-card class="ingredient-card">
+<mat-card class="ingredient-card" *ngIf="ingredient">
   <mat-card-header class="ingredient-card-header">
-    <mat-card-title>{{ ingredient.name }}</mat-card-title>
+    <mat-card-title class="ingredient-name"
+      >{{ ingredient.name }}</mat-card-title
+    >
   </mat-card-header>
 </mat-card>
