@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 
 import { Home } from './home';
 
@@ -8,9 +9,9 @@ describe('Home', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Home]
-    })
-    .compileComponents();
+      imports: [Home],
+      providers: [{ provide: ActivatedRoute, useValue: {} }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Home);
     component = fixture.componentInstance;
@@ -27,7 +28,31 @@ describe('Home', () => {
   });
 
   it('should render the home page title', () => {
-    const title = fixture.nativeElement.querySelector('h1');
+    const title = fixture.nativeElement.querySelector('.home-page-header');
     expect(title).toBeTruthy();
+  });
+
+  it('should have a non-empty home page title', () => {
+    const title = fixture.nativeElement.querySelector('.home-page-header');
+    expect(title.textContent).not.toBe('');
+  });
+
+  it('should render the home page description', () => {
+    const description = fixture.nativeElement.querySelector(
+      '.home-page-description'
+    );
+    expect(description).toBeTruthy();
+  });
+
+  it('should have a non-empty home page description', () => {
+    const description = fixture.nativeElement.querySelector(
+      '.home-page-description'
+    );
+    expect(description.textContent).not.toBe('');
+  });
+
+  it('should render the home page image', () => {
+    const image = fixture.nativeElement.querySelector('.home-image');
+    expect(image).toBeTruthy();
   });
 });

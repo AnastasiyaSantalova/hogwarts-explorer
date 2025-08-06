@@ -29,6 +29,14 @@ describe('Elixirs', () => {
     } as Elixir,
   ];
 
+  const mockFilterInputs = {
+    name: 'Nonexistent Elixir',
+    difficulty: 'Impossible',
+    ingredient: 'Nonexistent Ingredient',
+    inventorFullName: 'Nonexistent Inventor',
+    manufacturer: 'Nonexistent Manufacturer',
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient()],
@@ -89,32 +97,24 @@ describe('Elixirs', () => {
   });
 
   it('should return an empty array if no elixirs match the filters', (done) => {
-    const filterInputs = {
-      name: 'Nonexistent Elixir',
-      difficulty: 'Impossible',
-      ingredient: 'Nonexistent Ingredient',
-      inventorFullName: 'Nonexistent Inventor',
-      manufacturer: 'Nonexistent Manufacturer',
-    };
-
     // Simulate filtering logic
     const filtered = mockElixirs.filter(elixir =>
-      elixir.name === filterInputs.name &&
-      elixir.difficulty === filterInputs.difficulty &&
-      elixir.ingredients.some(ing => ing.name === filterInputs.ingredient) &&
-      elixir.inventors.some(inv => `${inv.firstName} ${inv.lastName}` === filterInputs.inventorFullName) &&
-      elixir.manufacturer === filterInputs.manufacturer
+      elixir.name === mockFilterInputs.name &&
+      elixir.difficulty === mockFilterInputs.difficulty &&
+      elixir.ingredients.some(ing => ing.name === mockFilterInputs.ingredient) &&
+      elixir.inventors.some(inv => `${inv.firstName} ${inv.lastName}` === mockFilterInputs.inventorFullName) &&
+      elixir.manufacturer === mockFilterInputs.manufacturer
     );
 
     spyOn(service, 'getElixirs').and.returnValue(of(filtered));
 
     service
       .getElixirs(
-        filterInputs.name,
-        filterInputs.difficulty,
-        filterInputs.ingredient,
-        filterInputs.inventorFullName,
-        filterInputs.manufacturer
+        mockFilterInputs.name,
+        mockFilterInputs.difficulty,
+        mockFilterInputs.ingredient,
+        mockFilterInputs.inventorFullName,
+        mockFilterInputs.manufacturer
       )
       .subscribe((elixirs) => {
         expect(elixirs).toEqual([]);

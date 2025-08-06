@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 import { Loader } from '../../../shared/components/loader/loader';
 import { ErrorMessage } from '../../../shared/components/error-message/error-message';
-import { PageHeader } from "../../../shared/components/page-header/page-header";
+import { PageHeader } from '../../../shared/components/page-header/page-header';
 
 /**
  * HousesList component that displays a list of houses.
@@ -42,13 +42,15 @@ export class HousesList {
       )
       .subscribe({
         next: (data) => {
+          this.isLoading = false;
           this.houses = data;
         },
         error: (error) => {
           console.error('Error loading houses:', error);
+          this.isLoading = false;
           this.error = true;
           this.houses = [];
-        }
+        },
       });
   }
 

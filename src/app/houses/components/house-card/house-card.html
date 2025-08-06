@@ -1,6 +1,6 @@
-<mat-card class="house-card">
+<mat-card class="house-card" *ngIf="house">
   <mat-card-header class="house-card-header">
-    <mat-card-title>{{ house.name }}</mat-card-title>
+    <mat-card-title class="house-name">{{ house.name }}</mat-card-title>
   </mat-card-header>
   <div class="house-image-container">
     <button mat-icon-button class="house-image-button">
